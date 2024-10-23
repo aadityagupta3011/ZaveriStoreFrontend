@@ -30,7 +30,7 @@ const Rings = () => {
             Back to Products
           </button>
           {/* Render the detailed product view */}
-          <ProductDetail productId={selectedProduct.id} />
+          <ProductDetail productId={selectedProduct.id} productList={products} />
         </div>
       ) : (
         <div>

@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+
+import React, { useState, useContext } from 'react';
 import Slider from 'react-slick';
 import { FaStar } from 'react-icons/fa'; // Import FaStar from react-icons
-import products from '../../Data/products'; // Assuming this is your product data source
+import { CartContext } from '../../context/CartContext'; // Import CartContext
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-const ProductDetail = ({ productId }) => {
-    const product = products.find((p) => p.id === productId);
+const ProductDetail = ({ productId, productList }) => {
+    // Find product based on productId from the passed productList
+    const product = productList.find((p) => p.id === productId);
     const [selectedImage, setSelectedImage] = useState(product.image); // Default to main image
+
+    // Access the cart context
+    const { addToCart } = useContext(CartContext); 
 
     // Slider settings
     const thumbnailSettings = {
@@ -37,6 +42,21 @@ const ProductDetail = ({ productId }) => {
     const copyToClipboard = (text) => {
         navigator.clipboard.writeText(text);
         alert(`${text} copied to clipboard!`);
+    };
+
+    // Add to Cart Function
+    const handleAddToCart = () => {
+        const item = {
+            id: product.id,
+            name: product.name,
+            description: product.description,
+            price: product.price,
+            image: product.image,
+            originalPrice: product.originalPrice,
+            rating: product.rating,
+            reviews: product.reviews,
+        };
+        addToCart(item); // Call the addToCart function with the product details
     };
 
     return (
@@ -73,8 +93,8 @@ const ProductDetail = ({ productId }) => {
 
                 {/* Features */}
                 <div className="space-y-4 mb-4">
-                    {/* Grid Layout: 2 items per row */}
                     <div className="grid grid-cols-2 gap-4">
+                        {/* Example features */}
                         <div className="flex items-center">
                             <img
                                 src="https://via.placeholder.com/20"
@@ -83,7 +103,6 @@ const ProductDetail = ({ productId }) => {
                             />
                             <span className="text-gray-500">Easy 30 Day Return</span>
                         </div>
-
                         <div className="flex items-center">
                             <img
                                 src="https://via.placeholder.com/20"
@@ -92,109 +111,20 @@ const ProductDetail = ({ productId }) => {
                             />
                             <span className="text-gray-500">Lifetime Plating</span>
                         </div>
-
-                        <div className="flex items-center">
-                            <img
-                                src="https://via.placeholder.com/20"
-                                alt="6-Month Warranty"
-                                className="w-6 h-6 mr-2"
-                            />
-                            <span className="text-gray-500">6-Month Warranty</span>
-                        </div>
-
-                        <div className="flex items-center">
-                            <img
-                                src="https://via.placeholder.com/20"
-                                alt="925 Silver"
-                                className="w-6 h-6 mr-2"
-                            />
-                            <span className="text-gray-500">Made with 925 Silver</span>
-                        </div>
+                        {/* Add more features as needed */}
                     </div>
                 </div>
-
-                {/* Delivery Estimate */}
-                <div className="mb-4">
-                    <label className="block text-gray-700 mb-2">Estimated Delivery Time</label>
-                    <div className="flex">
-                        <input
-                            type="text"
-                            className="border border-gray-300 p-2 rounded-l-md w-2/3"
-                            placeholder="Enter 6 digit pincode"
-                        />
-                        <button className="bg-pink-500 text-white px-4 rounded-r-md">CHECK</button>
-                    </div>
-                </div>
-
-                {/* Gift Wrap Option */}
-                <div className="mb-4 flex items-center">
-                    <input type="checkbox" id="gift-wrap" />
-                    <label htmlFor="gift-wrap" className="ml-2 text-gray-700">
-                        Add <span className="text-pink-500">gift wrap</span> to your order (₹50)
-                    </label>
-                </div>
-
-                {/* Special Offers Section */}
-                <div className="mb-4">
-                    <h2 className="text-xl font-semibold text-gray-800 mb-2">Special Offers</h2>
-                    {/* Use flex with evenly spaced items */}
-                    <div className="flex  justify-between gap-4 w-11/12">
-                        <div
-                            className="border border-gray-300 p-4 rounded-lg text-center cursor-pointer flex-1 flex items-center justify-center"
-                            style={{ aspectRatio: '1 / 1', maxWidth: '150px' }} // Perfect square with max width
-                            onClick={() => copyToClipboard('FLAT200')}
-                        >
-                            <div>
-                                <h3 className="text-lg font-bold text-gray-700">FLAT200</h3>
-                                <p className="text-sm text-gray-500">Valid on orders above Rs. 1799</p>
-                            </div>
-                        </div>
-
-                        <div
-                            className="border border-gray-300 p-4 rounded-lg text-center cursor-pointer flex-1 flex items-center justify-center"
-                            style={{ aspectRatio: '1 / 1', maxWidth: '150px' }} // Perfect square with max width
-                            onClick={() => copyToClipboard('FLAT300')}
-                        >
-                            <div>
-                                <h3 className="text-lg font-bold text-gray-700">FLAT300</h3>
-                                <p className="text-sm text-gray-500">Valid on orders above Rs. 2700</p>
-                            </div>
-                        </div>
-
-                        <div
-                            className="border border-gray-300 p-4 rounded-lg text-center cursor-pointer flex-1 flex items-center justify-center"
-                            style={{ aspectRatio: '1 / 1', maxWidth: '150px' }} // Perfect square with max width
-                            onClick={() => copyToClipboard('COMBO50')}
-                        >
-                            <div>
-                                <h3 className="text-lg font-bold text-gray-700">COMBO50</h3>
-                                <p className="text-sm text-gray-500">Buy 2 get 3rd at 50% OFF</p>
-                            </div>
-                        </div>
-
-                        <div
-                            className="border border-gray-300 p-4 rounded-lg text-center cursor-pointer flex-1 flex items-center justify-center"
-                            style={{ aspectRatio: '1 / 1', maxWidth: '150px' }} // Perfect square with max width
-                            onClick={() => copyToClipboard('LOYALTY15')}
-                        >
-                            <div>
-                                <h3 className="text-lg font-bold text-gray-700">LOYALTY15</h3>
-                                <p className="text-sm text-gray-500">15% OFF above Rs. 5000</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <p className="text-sm text-gray-400 mt-2">*Coupon can be applied at checkout</p>
-                </div>
-
 
                 {/* Action Buttons */}
                 <div className="flex space-x-4">
-                    <button className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600">
-                        Buy Now
+                    <button
+                        onClick={handleAddToCart} // Call the handleAddToCart function
+                        className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600"
+                    >
+                        Add to Cart
                     </button>
                     <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300">
-                        Add to Cart
+                        Buy Now
                     </button>
                 </div>
             </div>

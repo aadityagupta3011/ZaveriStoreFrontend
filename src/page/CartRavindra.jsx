@@ -1,24 +1,10 @@
-<<<<<<< HEAD
-import React, { useState, useContext } from "react";
-=======
 import React, { useContext, useState } from "react";
->>>>>>> f252b57e4d5c66fd7cfea7fd8b992b4803565d9b
 import { CartContext } from "../context/CartContext";
-import { Link } from "react-router-dom";
+import { FaTrash } from "react-icons/fa"; // Import the trash icon
+import {Link} from "react-router-dom";
 
-const CheckoutPage = () => {
-  const { cartItems } = useContext(CartContext); // Access cart items from context
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    address: "",
-    city: "",
-    state: "",
-    zip: "",
-    phone: "",
-    upiReference: "", // New field for UPI Reference/Transaction ID
-  });
-
+const CartRavindra = ({ setIsCartOpen }) => {
+  const { cartItems, removeFromCart } = useContext(CartContext); // Access cart items and remove function from context
   const [couponCode, setCouponCode] = useState(""); // State for coupon code
   const [discount, setDiscount] = useState(0); // State for discount amount
 
@@ -38,6 +24,8 @@ const CheckoutPage = () => {
   };
 
   // Function to apply the coupon code
+
+  const totalPriceAfterShipping = totalPrice + 5.99;
   const applyCoupon = () => {
     let newDiscount = 0;
 
@@ -61,99 +49,8 @@ const CheckoutPage = () => {
   };
 
   // Calculate final total price after applying discount and adding shipping
-  const finalTotalPrice = Math.round(totalPrice + 5.99 - discount); // Round the total price
+  const finalTotalPrice = Math.round(totalPriceAfterShipping - discount); // Round the total price
 
-<<<<<<< HEAD
-  // Handle form input changes
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch("http://localhost:5000/checkout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ formData, cartItems, totalPrice }),
-      });
-      const result = await response.json();
-      console.log("Order successful:", result);
-      alert("Order placed successfully!");
-    } catch (error) {
-      console.error("Error placing order:", error);
-      alert("Failed to place order.");
-    }
-  };
-
-  return (
-    <div className="container mx-auto p-6 bg-gray-50 min-h-screen grid grid-cols-1 md:grid-cols-2 gap-8">
-      {/* Form Section */}
-      <div className="bg-white p-6 shadow-md rounded-lg">
-        <h2 className="text-2xl font-semibold mb-6">Billing Information</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-700">Name</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Address</label>
-            <input
-              type="text"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded"
-              required
-            />
-          </div>
-          <div className="mb-4 grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-gray-700">City</label>
-              <input
-                type="text"
-                name="city"
-                value={formData.city}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border rounded"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700">State</label>
-              <input
-                type="text"
-                name="state"
-                value={formData.state}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border rounded"
-                required
-              />
-=======
   return (
     <div className="container mx-auto p-4 bg-gray-50 min-h-screen">
       <h1 className="text-3xl font-bold text-center mb-8">Your Shopping Cart</h1>
@@ -230,79 +127,22 @@ const CheckoutPage = () => {
                   Apply
                 </button>
               </div>
+              <Link
+  to="/Checkout"
+  state={{ finalTotalPrice: finalTotalPrice }}
+>
+  <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded w-full mt-4">
+    Proceed to Checkout
+  </button>
+</Link>
 
-              <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded w-full mt-4">
-                Proceed to Checkout
-              </button>
->>>>>>> f252b57e4d5c66fd7cfea7fd8b992b4803565d9b
+
             </div>
           </div>
-          <div className="mb-4 grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-gray-700">Zip Code</label>
-              <input
-                type="text"
-                name="zip"
-                value={formData.zip}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border rounded"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700">Phone</label>
-              <input
-                type="text"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border rounded"
-                required
-              />
-            </div>
-          </div>
-          
-          {/* UPI Reference / Transaction ID Field */}
-          <div className="mb-4">
-            <label className="block text-gray-700">UPI Reference / Transaction ID</label>
-            <input
-              type="text"
-              name="upiReference"
-              value={formData.upiReference}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded"
-              required
-              placeholder="Enter UPI Reference / Transaction ID"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded w-full"
-          >
-            Place Order
-          </button>
-        </form>
-      </div>
-
-      {/* Order Summary Section */}
-      <div className="bg-white p-6 shadow-md rounded-lg">
-        <h2 className="text-2xl font-semibold mb-6">Order Summary</h2>
-        <div className="border-b pb-4 mb-4">
-          {cartItems.map((item, index) => (
-            <div key={index} className="flex justify-between items-center py-2">
-              <span>{item.name}</span>
-              <span>${item.price.toFixed(2)}</span>
-            </div>
-          ))}
         </div>
-        <div className="flex justify-between text-lg font-semibold">
-          <span>Total:</span>
-          <span>${totalPrice.toFixed(2)}</span>
-        </div>
-      </div>
+      )}
     </div>
   );
 };
 
-export default CheckoutPage;
+export default CartRavindra;
