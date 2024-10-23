@@ -1,0 +1,80 @@
+@keyframes rotate-scale-up-hor {
+  0% {
+    transform: rotateX(0) scale(1);
+  }
+  50% {
+    transform: rotateX(180deg) scale(1.2);
+  }
+  100% {
+    transform: rotateX(360deg) scale(1);
+  }
+}
+
+.rotate-scale-up-hor {
+  -webkit-animation: rotate-scale-up-hor 0.65s linear both;
+  animation: rotate-scale-up-hor 0.65s linear both;
+}
+
+
+@keyframes slide-up-cube {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  40% {
+    transform: translateY(-20%);
+    opacity: 0.6;
+  }
+  80% {
+    transform: translateY(10%);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up-cube-alternate {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  30% {
+    transform: translateY(-15%);
+    opacity: 0.5;
+  }
+  60% {
+    transform: translateY(5%);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up-cube {
+  animation: slide-up-cube 1.3s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+}
+
+.animate-slide-up-cube-alternate {
+  animation: slide-up-cube-alternate 1.3s cubic-bezier(0.32, 1.22, 0.37, 1.66) forwards;
+}
+body {
+  background-color: #f9fafb; /* Light gray background */
+  font-family: 'Arial', sans-serif; /* Custom font family */
+  color: #374151; /* Dark text color */
+}
+
+h1 {
+  color: #111827; /* Darker color for headings */
+}
+
+ol {
+  padding-left: 1.5rem; /* Indent ordered list */
+}
+
+strong {
+  color: #2563eb; /* Blue color for strong text */
+}
