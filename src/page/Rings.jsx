@@ -37,7 +37,7 @@ const Rings = () => {
           <img
             src="https://www.giva.co/cdn/shop/files/Rings_-_Collection_Banner_Web_1_-min.jpg?v=1728452222&width=1780"
             alt="Rings Collection Banner"
-            className="mt-4 w-full object-cover"
+            className=" w-full object-cover"
           />
           <div className="p-6">
             <h1 className="text-2xl font-bold mb-4">Products</h1>

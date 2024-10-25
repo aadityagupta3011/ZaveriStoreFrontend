@@ -24,9 +24,9 @@ const Footer = () => {
         {/* Policies */}
         <div>
           <ul className="space-y-1 text-xs">
-            <li><Link to="/returns-policy" className="hover:underline">Why Choose Us</Link></li>
-            <li><Link to="/exchange-buyback" className="hover:underline">How We started</Link></li>
-            <li><Link to="/privacy-policy" className="hover:underline">Quality Surity</Link></li>
+            <li><Link to="/WhyChooseUs" className="hover:underline">Why Choose Us</Link></li>
+            <li><Link to="/HowWeStarted" className="hover:underline">How We started</Link></li>
+            <li><Link to="/QualityAssurance" className="hover:underline">Quality Surity</Link></li>
           </ul>
         </div>
 

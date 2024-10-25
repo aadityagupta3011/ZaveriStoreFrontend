@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { FaAngleDown, FaBars, FaTimes } from "react-icons/fa";
 import { CartContext } from "../context/CartContext"; // Import the Cart context
 import logo from "../assets/AVERI (1).png";
+import { IoCartSharp } from "react-icons/io5";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -68,10 +69,13 @@ const Navbar = () => {
             </Link>
 
             <Link to="/cart" className="relative">
-              Cart
-              <span className=" bg-red-200 rounded-full px-2 text-sm">
+            <span className='flex'>
+
+            <IoCartSharp className='text-2xl' />
+              <span className=" bg-green-100  rounded-full px-2 text-sm flex text-center items-center bottom-3 absolute left-3 opacity-90">
                 {cartItems.length} {/* Shows number of items in the cart */}
               </span>
+            </span>
             </Link>
 
             <Link to="/policy" className="hover:text-blue-600">
@@ -168,6 +172,18 @@ const Navbar = () => {
               </button>
             </div>
           </div>
+          <div>
+            
+          <Link to="/cart" className="relative">
+            <span className='flex'>
+
+            <IoCartSharp className='text-2xl' />
+              <span className=" bg-green-100  rounded-full px-2 text-sm flex text-center items-center bottom-3 absolute left-3 opacity-90">
+                {cartItems.length} {/* Shows number of items in the cart */}
+              </span>
+            </span>
+            </Link>
+          </div>
 
           {/* Hamburger Menu Icon */}
           <button onClick={toggleMenu} className="text-2xl text-gray-700 p-2">
@@ -191,6 +207,7 @@ const Navbar = () => {
             </button>
           </div>
           <div className="flex flex-col p-4 space-y-4 mt-5">
+            
             {navItems.map((item, index) => (
               <div key={index}>
                 <div className="flex justify-between items-center">
@@ -217,8 +234,19 @@ const Navbar = () => {
                     ))}
                   </ul>
                 )}
+
+                
               </div>
+              
             ))}
+            
+            <Link to="/term-and-condtiton" className="hover:text-blue-600">
+              Term & Condition
+            </Link>
+
+            <Link to="/policy" className="hover:text-blue-600">
+              policy
+            </Link>
           </div>
         </div>
       </div>

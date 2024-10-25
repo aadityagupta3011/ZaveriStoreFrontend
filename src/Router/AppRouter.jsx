@@ -18,6 +18,9 @@ import Bangles from "../page/Bangles.jsx";
 import Coins from "../page/Coins.jsx";
 import Footer from "../component/common/footerRavindra.jsx";
 import Checkout from "../page/Checkout.jsx"
+import HowWeStarted from "../component/core/HowWeStarted.jsx";
+import WhyChooseUs from "../component/core/WhyChooseUs.jsx"
+import QualityAssurance from "../component/core/QualityAssurance.jsx"
 const AppRouter = () => {
   return (
     <div>
@@ -43,6 +46,9 @@ const AppRouter = () => {
         <Route path="/Earning" element={<Earring/>} />
         <Route path="/Coins" element={<Coins/>} />
         <Route path="/Checkout" element={ <Checkout/> } />
+        <Route path="/HowWeStarted" element={ <HowWeStarted/> } />
+        <Route path="/WhyChooseUs" element={ <WhyChooseUs/> } />
+        <Route path="/QualityAssurance" element={ <QualityAssurance/> } />
       </Routes>
         <Footer />
     </div>

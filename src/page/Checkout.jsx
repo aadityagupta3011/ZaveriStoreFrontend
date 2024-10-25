@@ -7,6 +7,9 @@ const CheckoutPage = () => {
   const { cartItems } = useContext(CartContext);
   const location = useLocation();
   const { finalTotalPrice } = location.state || { finalTotalPrice: 0 }; // Retrieve the state
+  const { totalPriceAfterShipping } = location.state || {
+    totalPriceAfterShipping: 0,
+  }; // Retrieve the state
 
   const [formData, setFormData] = useState({
     name: "",
@@ -34,7 +37,11 @@ const CheckoutPage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ formData, cartItems, totalPrice: finalTotalPrice }),
+        body: JSON.stringify({
+          formData,
+          cartItems,
+          totalPrice: finalTotalPrice,
+        }),
       });
       const result = await response.json();
       alert("Order placed successfully!");
@@ -54,7 +61,6 @@ const CheckoutPage = () => {
         // Optionally, you can reload the page instead of clearing the form
         // window.location.reload();
       }, 2000);
-
     } catch (error) {
       console.error("Error placing order:", error);
       alert("Failed to place order.");
@@ -155,9 +161,9 @@ const CheckoutPage = () => {
               required
             />
           </div>
-          <button type="submit"
-      
-      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+          <button
+            type="submit"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
             Place Order
           </button>
         </form>
@@ -171,6 +177,34 @@ const CheckoutPage = () => {
         <h1 className="text-red-600 font-bold text-2xl flex justify-center mt-2">
           Kindly Pay: ₹ {finalTotalPrice}
         </h1>
+        <div>
+          {Math.round(totalPriceAfterShipping) ===
+          Math.round(finalTotalPrice) ? null : (
+            <>
+              <div className="text-lg font-semibold text-gray-700 mb-4">
+                Before Coupon:
+                <span className="text-blue-600 ml-2">
+                  ₹{Math.round(totalPriceAfterShipping)}
+                </span>
+              </div>
+
+              <div className="text-lg font-semibold text-gray-700 mb-4">
+                After Applying Coupon:
+                <span className="text-green-600 ml-2">
+                  ₹{Math.round(finalTotalPrice)}
+                </span>
+              </div>
+
+              <div className="text-lg font-semibold text-gray-700 mb-4">
+                Hurray! You have saved
+                <span className="text-red-600 ml-2">
+                  ₹{Math.round(totalPriceAfterShipping - finalTotalPrice)}
+                </span>
+              </div>
+            </>
+          )}
+        </div>
+
         <h2 className="text-2xl font-semibold mb-6 mt-4">Order Summary</h2>
         <div className="space-y-4">
           {cartItems.map((item, index) => (
